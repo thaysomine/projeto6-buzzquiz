@@ -25,7 +25,7 @@ function renderQuizzes(reply) {
 function createQuizz() {
     const hide = document.querySelector('.main-content');
     hide.classList.add('hiden');
-    const show = document.querySelector('.creating-quizz');
+    const show = document.querySelector('.first-page');
     show.classList.remove('hiden');
 }
 
@@ -40,7 +40,18 @@ function saveBasicInfoQuizz() {
     if ((title < 20) || (title > 65) || (qtQuestion < 4) || (levels < 3) || (validateURL(urlImg) === false)) {
         alert("Preencha os dados corretamente!");
     } else {
-        alert("ok");
+        quiz = {
+            title: title,
+            image: urlImg,
+            quenstions: [],
+            levels: [],
+        }
+        const hide = document.querySelector('.first-page');
+        hide.classList.add('hiden');
+        const show = document.querySelector('.second-page');
+        show.classList.remove('hiden');
+        console.log(quiz);
+        questionsQuizz();
     }
 }
 
@@ -48,4 +59,10 @@ function saveBasicInfoQuizz() {
 
 function validateURL(url) {
     return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+}
+
+// criando as perguntas do quizz
+function questionsQuizz() {
+    const questionsQuizz = document.querySelector(".screen2-creating-quizz");
+    questionsQuizz.innerHTML = `<h1>Crie suas perguntas</h1>`;
 }

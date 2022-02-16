@@ -24,13 +24,15 @@
         <!-- espaço para criar quiz caso ainda nao tenha -->
         <section class="new-quiz">
             <p>Você não criou nenhum <br> quizz ainda :(</p>
-            <div onclick="createQuizz()">Criar Quizz</div> <!-- coloquei a função p chamar a primeira tela de criar quizz--> 
+            <div onclick="createQuizz()">Criar Quizz</div>
+            <!-- coloquei a função p chamar a primeira tela de criar quizz-->
         </section>
         <!-- espaço para agrupar quizzes do usuário -->
         <section class="user-quizzes">
             <div class="wrap">
                 <h1>Seus Quizzes</h1>
-                <img src="img/add-circle.svg" alt="botão criar quiz" onclick="createQuizz()"> <!-- coloquei a função p chamar a primeira tela de criar quizz--> 
+                <img src="img/add-circle.svg" alt="botão criar quiz" onclick="createQuizz()">
+                <!-- coloquei a função p chamar a primeira tela de criar quizz-->
             </div>
             <div class="quiz-main">
                 <img src="img/imagem-exemplo.jpg">
@@ -48,16 +50,26 @@
 
 
     <!--CRIAR QUIZZ-->
-    <article class="creating-quizz hiden">
-         <!-- Primeira página de criar quizz -->
-        <section class="screen1-creating-quizz">
-            <h1>Comece pelo começo</h1>
-            <input type="text" placeholder="Título do seu quizz" class="title-quizz">
-            <input type="text" placeholder="URL da imagem do seu quizz" class="image-url-quizz">
-            <input type="text" placeholder="Quantidade de perguntas do seu quizz" class="qt-questions-quizz">
-            <input type="text" placeholder="Quantidade de níveis do quizz" class="level-quizz">
-            <button class="create-question next" onclick="saveBasicInfoQuizz()">Prosseguir pra criar perguntas</button>
-        </section>
+    <article class="creating-quizz ">
+        <!-- Primeira página de criar quiz, infos básicas -->
+        <div class="first-page hiden">
+            <section class="screen1-creating-quizz">
+                <h1>Comece pelo começo</h1>
+                <input type="text" placeholder="Título do seu quizz" class="title-quizz">
+                <input type="text" placeholder="URL da imagem do seu quizz" class="image-url-quizz">
+                <input type="text" placeholder="Quantidade de perguntas do seu quizz" class="qt-questions-quizz">
+                <input type="text" placeholder="Quantidade de níveis do quizz" class="level-quizz">
+                <button class="create-question next" onclick="saveBasicInfoQuizz()">Prosseguir pra criar
+                    perguntas</button>
+            </section>
+        </div>
+        <!-- Segunda pagina criar quiz, perguntas-->
+        <div class="second-page hiden">
+            <section class="screen2-creating-quizz">
+                <h1>Crie suas perguntas</h1>
+                <!-- inseridos dinamicamente pelo js (função questionsQuizz)-->
+            </section>
+        </div>
     </article>
 
     <script src="script.js"></script>
