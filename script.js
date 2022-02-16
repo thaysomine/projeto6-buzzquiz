@@ -1,4 +1,4 @@
-let quizData = [];
+let quizData = []; 
 
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
