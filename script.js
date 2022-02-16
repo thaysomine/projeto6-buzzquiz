@@ -25,7 +25,7 @@ function renderQuizzes(reply) {
 function createQuizz() {
     const hide = document.querySelector('.main-content');
     hide.classList.add('hiden');
-    const show = document.querySelector('screen1-creating-quizz');
+    const show = document.querySelector('.creating-quizz');
     show.classList.remove('hiden');
 }
 
