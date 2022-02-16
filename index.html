@@ -14,17 +14,25 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
     <!-- header do buzzquizz (manter nas outras páginas)  -->
     <header>BuzzQuizz</header> 
     
     <!-- box pra agrupar o conteúdo principal -->
     <article class="main-content">
-        <!-- espaço para criar quizz caso ainda nao tenha -->
-        <section class="new-quizz">
+        <!-- espaço para criar quiz caso ainda nao tenha -->
+        <section class="new-quiz">
             <p>Você não criou nenhum <br> quizz ainda :(</p>
             <div class="new-quizz-button">Criar Quizz</div>
         </section>
+        <h1>Todos os Quizzes</h1>
+        <!-- espaço para agrupar todos os quizzes -->
+        <section class="all-quizzes">
+            <!-- inseridos dinamicamente pelo js (função renderQuizzes)--> 
+        </section>
     </article>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
