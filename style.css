@@ -46,7 +46,6 @@ section.new-quiz {
     border-radius: 5px;
     background-color: #FAFAFA;
     text-align: center;
-
 }
 .new-quiz p {
     font-size: 20px;
@@ -77,7 +76,7 @@ section.new-quiz {
     flex-wrap: wrap;
 }
 .main-content h1 {
-    margin-top: 77px;
+    margin-top: 50px;
     font-weight: bold;
     font-size: 20px;
     line-height: 23px;
@@ -91,7 +90,7 @@ section.new-quiz {
     margin-right: 15px;
     margin-bottom: 12px;
 }
-.all-quizzes img {
+.all-quizzes img, .user-quizzes img {
     width: 340px;
     height: 181px;
     border-radius: 5px;    
@@ -106,4 +105,15 @@ section.new-quiz {
     font-size: 19px;
     line-height: 22px;
     color: #FFFFFF;
+}
+
+/* CSS dos quizzes do usuário */
+.wrap {
+    display: flex;
+    justify-content: space-between;
+}
+.wrap img {
+    width: 33px;
+    height: 33px;
+    margin-top: 45px;
 }
