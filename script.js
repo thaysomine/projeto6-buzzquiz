@@ -79,12 +79,12 @@ function questionsQuizz() {
 
     for (let i = 0; i < numQuestions; i++) {
         questionsQuizz.innerHTML += `
-        <h2>Pergunta ${i+1}</h2>
+        <h2>Pergunta ${i + 1}</h2>
         <input type="text" placeholder="Texto da pergunta" class="question-text-quiz">
         <input type="text" placeholder="Cor de fundo da pergunta" class="color-question-quiz">
         <h2>Resposta correta</h2>
         <input type="text" placeholder="Resposta correta" class="right-answer-quiz">
-        <input type="text" placeholder="URL da imagem" class="right-answer-img-quiz">
+        <input type="text" placeholder="URL da imagem" class="right-answer-url-quiz">
         <h2>Respostas incorretas</h2>
         <input type="text"  class="spaceCss" placeholder="Resposta incorreta 1">
         <input type="text" placeholder="URL da imagem 1">
@@ -94,5 +94,24 @@ function questionsQuizz() {
         <input type="text" placeholder="URL da imagem 3">
         `
     }
+    questionsQuizz.innerHTML += `<button class="create-question next" onclick="saveQuestions()">Prosseguir pra criar níveis</button>
+    `
+}
 
+function saveQuestions() {
+    const questionTitle = document.querySelector(".question-text-quiz").value;
+    const questionColor = document.querySelector(".color-question-quiz").value;
+    const rightAnswer = document.querySelector(".right-answer-quiz").value;
+    const urlImg = document.querySelector(".right-answer-url-quiz").value;
+
+
+    if ((questionTitle.length < 20) || (rightAnswer === '') || (validateURL(urlImg) === false) || (validateHexa(questionColor) === false)) {
+        alert("Preencha os dados corretamente!");
+    } else {
+        alert('ok')
+    }
+}
+
+function validateHexa(color) {
+    return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(color);
 }
