@@ -137,7 +137,7 @@ section.new-quiz {
     font-size: 23px;
 }
 
-.screen1-creating-quizz {
+.screen1-creating-quizz, .screen2-creating-quizz {
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -167,4 +167,18 @@ section.new-quiz {
     margin-top: 85px;
     font-size: 21px;
     color: #FFF5F4;
+}
+
+/* CSS das páginas de criação de quizz - pág 2 */
+.second-page h2 {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: #000000;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.spaceCss {
+    margin-top: 20px;
 }

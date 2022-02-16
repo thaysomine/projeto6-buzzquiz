@@ -1,4 +1,10 @@
 let quizData = [];
+
+let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
+let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
+
+
+
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
 promisse.then(renderQuizzes);
@@ -34,10 +40,13 @@ function createQuizz() {
 function saveBasicInfoQuizz() {
     const title = document.querySelector(".title-quizz").value;
     const urlImg = document.querySelector(".image-url-quizz").value;
-    const qtQuestion = document.querySelector(".qt-questions-quizz").value;
+    const qtQuestion = Number(document.querySelector(".qt-questions-quizz").value);
     const levels = document.querySelector(".level-quizz").value;
 
-    if ((title < 20) || (title > 65) || (qtQuestion < 4) || (levels < 3) || (validateURL(urlImg) === false)) {
+    numQuestions = qtQuestion;
+    levelQuestions = levels;
+
+    if ((title.length < 20) || (title.length > 65) || (qtQuestion < 4) || (levels < 3) || (validateURL(urlImg) === false)) {
         alert("Preencha os dados corretamente!");
     } else {
         quiz = {
@@ -46,11 +55,7 @@ function saveBasicInfoQuizz() {
             quenstions: [],
             levels: [],
         }
-        const hide = document.querySelector('.first-page');
-        hide.classList.add('hiden');
-        const show = document.querySelector('.second-page');
-        show.classList.remove('hiden');
-        console.log(quiz);
+
         questionsQuizz();
     }
 }
@@ -63,6 +68,31 @@ function validateURL(url) {
 
 // criando as perguntas do quizz
 function questionsQuizz() {
+    const hide = document.querySelector('.first-page');
+    hide.classList.add('hiden');
+    const show = document.querySelector('.second-page');
+    show.classList.remove('hiden');
+    console.log(numQuestions);
+
     const questionsQuizz = document.querySelector(".screen2-creating-quizz");
-    questionsQuizz.innerHTML = `<h1>Crie suas perguntas</h1>`;
+    //questionsQuizz.innerHTML = `<h1>Crie suas perguntas</h1>`;
+
+    for (let i = 0; i < numQuestions; i++) {
+        questionsQuizz.innerHTML += `
+        <h2>Pergunta ${i+1}</h2>
+        <input type="text" placeholder="Texto da pergunta" class="question-text-quiz">
+        <input type="text" placeholder="Cor de fundo da pergunta" class="color-question-quiz">
+        <h2>Resposta correta</h2>
+        <input type="text" placeholder="Resposta correta" class="right-answer-quiz">
+        <input type="text" placeholder="URL da imagem" class="right-answer-img-quiz">
+        <h2>Respostas incorretas</h2>
+        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 1">
+        <input type="text" placeholder="URL da imagem 1">
+        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 2">
+        <input type="text" placeholder="URL da imagem 2">
+        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 3">
+        <input type="text" placeholder="URL da imagem 3">
+        `
+    }
+
 }
