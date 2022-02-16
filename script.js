@@ -19,3 +19,12 @@ function renderQuizzes(reply) {
         `;
     }
 }
+
+
+//função para quando o usuário clicar pra criar quizz//
+function createQuizz() {
+    const hide = document.querySelector('.main-content');
+    hide.classList.add('hiden');
+    const show = document.querySelector('screen1-creating-quizz');
+    show.classList.remove('hiden');
+}
