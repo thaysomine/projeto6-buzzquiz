@@ -185,15 +185,20 @@ section.new-quiz {
 
 .question-name {
     display: flex;
+    justify-content: space-between;
 }
 
 .question-name button {
-    background-color: red;
+    background-color: #FAFAFA;
     border: none;
 }
 
-.ion-icon {
+.iconeQuiz {
     font-size: 25px;
     color: #000000;
 }
 
+.test {
+    display: flex;
+    flex-direction: column;
+}
