@@ -94,12 +94,17 @@ section.new-quiz {
     position: relative;
     margin-right: 15px;
     margin-bottom: 12px;
+    background: linear-gradient(transparent, black);
 }
 .all-quizzes img, .user-quizzes img {
     width: 340px;
     height: 181px;
     border-radius: 5px;    
     object-fit: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
 }
 .description {
     position: absolute;
@@ -132,11 +137,13 @@ section.new-quiz {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(0, 0, 0);
 }
 .quiz-page-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 60%;
 }
 .quiz-page-description {
     position: absolute;
@@ -198,6 +205,70 @@ section.new-quiz {
     color: #000000;   
 }
 
+/* CSS da parte que mostra o resultado */
+.quiz-result {
+    width: 100%;
+    height: 430px;
+    padding: 18px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    background-color: #FFFFFF;
+}
+.result-description {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #EC362D;
+
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 27px;
+    color: #FFFFFF;
+}
+.result-info {
+    display: flex;
+    margin-top: 18px;
+}
+.result-info img {
+    width: 364px;
+    height: 273px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+.result-info p {
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 25px;
+    color: #484848;   
+}
+
+/* botão reiniciar quiz */
+.reset-quiz-button {
+    width: 260px;
+    height: 52px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 57px;
+    background-color: #EC362D;
+    border-radius: 15px;
+
+    font-size: 21px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF5F4;
+}
+/* botão voltar para home */
+.homepage-button {
+    margin-top: 25px;
+    font-size: 21px;
+    line-height: 25px; 
+    text-align: center;
+    color: #818181;
+}
 
 
 

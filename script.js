@@ -3,7 +3,8 @@ let quizData = [];
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
 
-
+let idHolder = null;
+let saveData;
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -18,13 +19,76 @@ function renderQuizzes(reply) {
 
     for (let i = 0; i < quizData.length; i++) {
         quizList.innerHTML += `
-        <div class="quiz-main">
+        <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}">
             <img src="${quizData[i].image}" alt="modelo">
             <div class="description">${quizData[i].title}</div>
         </div>
         `;
     }
 }
+
+//função para acessar quiz desejado
+function goToQuiz(acessQuiz) {
+    idHolder = acessQuiz.id;
+    console.log(idHolder);
+    console.log(acessQuiz);
+    const searchQuiz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${idHolder}`);
+    searchQuiz.then(renderPageTwo);
+}
+
+// função para acessar pag do quiz clicado
+function renderPageTwo(reply) {
+    saveData = reply.data;
+    console.log(reply);
+
+    document.querySelector(".main-content").classList.add("hiden");
+    document.querySelector(".quiz-page").classList.remove("hiden");
+    
+    renderBanner(); // função para renderizar banner
+    renderQuestions();// função para renderizar perguntas
+}
+
+// função para renderizar banner
+function renderBanner() {
+    const bannerImage = document.querySelector(".quiz-page-image");
+    bannerImage.innerHTML = `
+    <img src="${saveData.image}">
+    <div class="quiz-page-description">${saveData.title}</div>
+    `;
+}
+// função para renderizar perguntas
+function renderQuestions() {
+    const questions = saveData.questions
+    const quizQuestions = document.querySelector(".quiz-questions");
+    questions.forEach(question => {
+        quizQuestions.innerHTML += `
+        <section class="question-card">
+                <div class="question-description">${question.title}</div>
+                <div class="all-answers">${renderAnswers(question)}</div>
+            </section>
+        `;
+    });
+}
+// função para renderizar as respostas
+function renderAnswers(question) {
+    const answers = question.answers
+    console.log(answers);
+    let quizAnswers = "";
+    answers.forEach(answer => {
+        quizAnswers += `
+        <div class="answer">
+            <img src="${answer.image}">
+            <h3>${answer.text}</h3>
+        </div>
+        `; 
+    });
+    return quizAnswers;
+}
+
+
+
+
+
 
 
 //função para quando o usuário clicar pra criar quizz
