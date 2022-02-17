@@ -198,7 +198,7 @@ section.new-quiz {
     color: #000000;
 }
 
-.test {
+.containerReal {
     display: flex;
     flex-direction: column;
 }
