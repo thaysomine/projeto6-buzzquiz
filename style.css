@@ -182,3 +182,18 @@ section.new-quiz {
 .spaceCss {
     margin-top: 20px;
 }
+
+.question-name {
+    display: flex;
+}
+
+.question-name button {
+    background-color: red;
+    border: none;
+}
+
+.ion-icon {
+    font-size: 25px;
+    color: #000000;
+}
+

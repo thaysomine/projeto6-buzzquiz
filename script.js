@@ -79,19 +79,24 @@ function questionsQuizz() {
 
     for (let i = 0; i < numQuestions; i++) {
         questionsQuizz.innerHTML += `
-        <h2>Pergunta ${i + 1}</h2>
-        <input type="text" placeholder="Texto da pergunta" class="question-text-quiz">
-        <input type="text" placeholder="Cor de fundo da pergunta" class="color-question-quiz">
-        <h2>Resposta correta</h2>
-        <input type="text" placeholder="Resposta correta" class="right-answer-quiz">
-        <input type="text" placeholder="URL da imagem" class="right-answer-url-quiz">
-        <h2>Respostas incorretas</h2>
-        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 1">
-        <input type="text" placeholder="URL da imagem 1">
-        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 2">
-        <input type="text" placeholder="URL da imagem 2">
-        <input type="text"  class="spaceCss" placeholder="Resposta incorreta 3">
-        <input type="text" placeholder="URL da imagem 3">
+        <div class="question-name">
+            <h2 onclick="toggleQuestions()">Pergunta ${i + 1}</h2>
+            <button><ion-icon name="create-outline"></ion-icon></button>
+        </div>
+        <div class="container hiden">
+            <input type="text" placeholder="Texto da pergunta" class="question-text-quiz">
+            <input type="text" placeholder="Cor de fundo da pergunta" class="color-question-quiz">
+            <h2>Resposta correta</h2>
+            <input type="text" placeholder="Resposta correta" class="right-answer-quiz">
+            <input type="text" placeholder="URL da imagem" class="right-answer-url-quiz">
+            <h2>Respostas incorretas</h2>
+            <input type="text"  class="spaceCss" placeholder="Resposta incorreta 1">
+            <input type="text" placeholder="URL da imagem 1">
+            <input type="text"  class="spaceCss" placeholder="Resposta incorreta 2">
+            <input type="text" placeholder="URL da imagem 2">
+            <input type="text"  class="spaceCss" placeholder="Resposta incorreta 3">
+            <input type="text" placeholder="URL da imagem 3">
+        <div>
         `
     }
     questionsQuizz.innerHTML += `<button class="create-question next" onclick="saveQuestions()">Prosseguir pra criar níveis</button>
@@ -114,4 +119,9 @@ function saveQuestions() {
 
 function validateHexa(color) {
     return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(color);
+}
+
+function toggleQuestions() {
+    let question = document.querySelector(".container");
+    question.classList.toggle('hiden');
 }
