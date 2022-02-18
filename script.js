@@ -2,6 +2,7 @@ let quizData = [];
 
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
+let newQuiz = [];
 
 let idHolder = null;
 let saveData;
@@ -150,13 +151,13 @@ function saveBasicInfoQuizz() {
     if ((title.length < 20) || (title.length > 65) || (qtQuestion < 3) || (levels < 2) || (validateURL(urlImg) === false)) {
         alert("Preencha os dados corretamente!");
     } else {
-        quiz = {
+        newQuiz = {
             title: title,
             image: urlImg,
-            quenstions: [],
+            questions: [],
             levels: [],
         }
-
+        console.log(newQuiz);
         questionsQuizz();
     }
 }
@@ -230,6 +231,7 @@ function saveQuestions() {
 function checkQuestions(numQuest) {
     let checkAnswer3 = true;
     let checkAnswer4 = true;
+    let answers = [];
 
     const questionTitle = document.querySelector(".n" + numQuest + "question-text-quiz").value;
     const questionColor = document.querySelector(".n" + numQuest + "color-question-quiz").value;
@@ -259,7 +261,55 @@ function checkQuestions(numQuest) {
         alert("Preencha os dados corretamente!");
     } else {
         alert('ok')
+
+        const answer1 = {
+            text: questionCorrectAnswer,
+			image: questionCorrectAnswerURLImage,
+			isCorrectAnswer: true
+        }
+
+        const answer2 = {
+            text: questionIncorrectAnswer1,
+			image: questionIncorrectAnswer1URLImage,
+			isCorrectAnswer: false
+        }
+
+        const answer3 = {
+            text: questionIncorrectAnswer2,
+			image: questionIncorrectAnswer2URLImage,
+			isCorrectAnswer: false
+        }
+
+        const answer4 = {
+            text: questionIncorrectAnswer3,
+			image: questionIncorrectAnswer3URLImage,
+			isCorrectAnswer: false
+        }
+
+        //Checando quais respostas foram preenchidas pra dar o push no objeto
+
+        if ((checkAnswer3 === true) && (checkAnswer4 === true)) {
+            answers.push(answer1, answer2, answer3, answer4);
+        }
+
+        if ((checkAnswer3 === true) && (checkAnswer4 === false)) {
+            answers.push(answer1, answer2, answer3);
+        }
+
+        if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
+            answers.push(answer1, answer2);
+        }
+
     }
+
+    const object = {
+        title: questionTitle,
+        color: questionColor,
+        answers: answers,
+    }
+
+newQuiz.questions.push(object);
+console.log(newQuiz)
 }
 
 // renderizando os niveis do quizz a partir da quantidade definida pelo user na tela anterior
@@ -313,6 +363,9 @@ function checkLevels(numLevel) {
         alert("Preencha os dados corretamente!");
     } else {
         alert('ok');
+
+
+
     }
 }
 
