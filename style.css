@@ -126,6 +126,7 @@ section.new-quiz {
     width: 33px;
     height: 33px;
     margin-top: 45px;
+    position: relative;
 }
 
 /* CSS da imagem banner (página do quiz - tela 2)*/

@@ -47,7 +47,6 @@ function renderPageTwo(reply) {
     renderBanner(); // função para renderizar banner
     renderQuestions();// função para renderizar perguntas
 }
-
 // função para renderizar banner
 function renderBanner() {
     const bannerImage = document.querySelector(".quiz-page-image");
@@ -71,13 +70,14 @@ function renderQuestions() {
 }
 // função para renderizar as respostas
 function renderAnswers(question) {
-    const answers = question.answers
+    const answersUnrandomized = question.answers
+    const answers = answersUnrandomized.sort(()=> Math.random() - 0.5);
     console.log(answers);
     let quizAnswers = "";
     answers.forEach(answer => {
         quizAnswers += `
         <div class="answer">
-            <img src="${answer.image}">
+            <img onclick="chooseAnswer(this)" src="${answer.image}">
             <h3>${answer.text}</h3>
         </div>
         `; 
@@ -85,8 +85,14 @@ function renderAnswers(question) {
     return quizAnswers;
 }
 
+// função para selecionar a resposta clicada e realizas as mudanças necessarias 
 
 
+
+// função para voltar a pag inicial ao clicar no botão
+function goToHome() {
+    window.location.reload(true);
+}
 
 
 
