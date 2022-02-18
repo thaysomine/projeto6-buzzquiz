@@ -5,6 +5,7 @@ let levelQuestions; //constante p guardar nível que o usuário escolher na cria
 
 let idHolder = null;
 let saveData;
+let lock = false;
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -76,18 +77,48 @@ function renderAnswers(question) {
     let quizAnswers = "";
     answers.forEach(answer => {
         quizAnswers += `
-        <div class="answer">
-            <img onclick="chooseAnswer(this)" src="${answer.image}">
+        <div onclick="chooseAnswer(this)" class="answer ${answer.isCorrectAnswer}">
+            <img src="${answer.image}">
             <h3>${answer.text}</h3>
         </div>
         `; 
     });
+    console.log(quizAnswers)
     return quizAnswers;
 }
 
-// função para selecionar a resposta clicada e realizas as mudanças necessarias 
+// função para selecionar a resposta clicada e realizar as mudanças necessarias
+function chooseAnswer(answerElement) {
+    console.log(answerElement);
+    answerElement.classList.add("select")
+    let parentElement = answerElement.parentNode;
+    let selectAnswer = parentElement.querySelectorAll(".answer")
 
+    selectAnswer.forEach(answer => {
+        let elementSelect = answer.classList.contains("select")
+        if (elementSelect === false) {
+            answer.classList.add("fog");
+            answer.setAttribute("onclick","");
+        } else {
+            answer.setAttribute("onclick","");
+        }
+    });
+    // chamar a função para revelar respostas
+    answerResult(answerElement);
+}
+function answerResult(answerElement) {
+    let parentElement = answerElement.parentNode;
+    let selectAnswer = parentElement.querySelectorAll(".answer h3");
+    console.log(selectAnswer);
 
+    let aleatoria = parentElement.querySelector(".true h3");
+    aleatoria.style.color="green";
+
+    let para = parentElement.querySelectorAll(".false h3"); 
+    para.forEach(answer => {
+            answer.style.color="red";
+    });
+}
 
 // função para voltar a pag inicial ao clicar no botão
 function goToHome() {

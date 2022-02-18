@@ -2,6 +2,15 @@
 .hiden {
     display: none;
 }
+.fog {
+    opacity: 0.3;
+}
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
 
 body {
     width: 100vw;
@@ -163,7 +172,6 @@ section.new-quiz {
 /* CSS  dos cards de perguntas e respostas*/
 .question-card {
     width: 100%;
-    height: 676px;
     padding: 25px;
     margin-bottom: 70px;
     box-sizing: border-box;
@@ -191,19 +199,15 @@ section.new-quiz {
     box-sizing: border-box;
 }
 .answer {
-    margin-bottom: 20px;
+    margin: 15px 0 20px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px; 
 }
 .answer img { /* CSS para as imgs da resposta */
     width: 345px;
     height: 175px;
     object-fit: cover;
-}
-.answer h3 {
-    margin-top: 15px;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 23px;
-    color: #000000;   
 }
 
 /* CSS da parte que mostra o resultado */
