@@ -398,3 +398,21 @@ function sucessCreatingQuiz() {
     const show = document.querySelector('.fourth-page');
     show.classList.remove('hiden');
 }
+
+function sendQuiz() {
+    console.log(newQuiz);
+    const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz);
+
+    promisse.then(deucerto);
+    promisse.catch(deuruim);
+}
+
+function deucerto(mensagem) {
+    let msg = mensagem.data;
+    console.log(msg);
+}
+
+function deuruim(mensagemm) {
+    let msg = mensagemm.response.status;
+    console.log(msg);
+}
