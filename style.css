@@ -292,7 +292,7 @@ section.new-quiz {
     font-size: 23px;
 }
 
-.screen1-creating-quizz, .screen2-creating-quizz {
+.screen1-creating-quizz, .screen2-creating-quizz, .screen3-creating-quizz {
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -319,13 +319,13 @@ section.new-quiz {
     background: #EC362D;
     border-radius: 15px;
     border:none;
-    margin-top: 85px;
+    margin-top: 65px;
     font-size: 21px;
     color: #FFF5F4;
 }
 
 /* CSS das páginas de criação de quizz - pág 2 */
-.second-page h2 {
+h2 {
     font-weight: bold;
     font-size: 20px;
     line-height: 23px;
@@ -336,4 +336,26 @@ section.new-quiz {
 
 .spaceCss {
     margin-top: 20px;
+}
+
+.question-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 564px;
+}
+
+.question-name button {
+    background-color: #FAFAFA;
+    border: none;
+}
+
+.iconeQuiz {
+    font-size: 35px;
+    color: #000000;
+}
+
+.containerReal {
+    display: flex;
+    flex-direction: column;
 }
