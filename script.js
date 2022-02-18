@@ -349,8 +349,6 @@ function toggleLevels(questionLevel) {
 
 //função validação pra cada nivel(i) na tela de niveis 3-3
 function checkLevels(numLevel) {
-    //let checkAnswer3 = true;
-    //let checkAnswer4 = true;
 
     const levelTitle = document.querySelector(".n" + numLevel + "title-level").value;
     const levelMinRight = document.querySelector(".n" + numLevel + "min-level").value;
@@ -364,8 +362,15 @@ function checkLevels(numLevel) {
     } else {
         alert('ok');
 
+        const object = {
+            title: levelTitle,
+			image: levelURLimg,
+			text: levelDescription,
+			minValue: levelMinRight
+        }
 
-
+        newQuiz.levels.push(object);
+        console.log(newQuiz);
     }
 }
 
