@@ -8,6 +8,8 @@ let idHolder = null;
 let saveData;
 let lock = false;
 
+let error = false;
+
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
 promisse.then(renderQuizzes);
@@ -220,10 +222,14 @@ function validateHexa(color) {
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveQuestions() {
+    error = false;
     for (i = 0; i < numQuestions; i++) {
         checkQuestions(i + 1);
-        console.log("teste2")
     }
+    if (error) {
+        alert("Preencha os dados corretamente!");
+        return;
+    } 
     quizLevels();
 }
 
@@ -258,9 +264,8 @@ function checkQuestions(numQuest) {
 
 
     if ((questionTitle.length < 20) || (questionCorrectAnswer === '') || (validateURL(questionCorrectAnswerURLImage) === false) || (validateHexa(questionColor) === false) || (questionIncorrectAnswer1 === '') || (validateURL(questionIncorrectAnswer1URLImage) === false)) {
-        alert("Preencha os dados corretamente!");
+        error = true;
     } else {
-        alert('ok')
 
         const answer1 = {
             text: questionCorrectAnswer,
@@ -358,9 +363,8 @@ function checkLevels(numLevel) {
 
     
     if ((levelTitle.length < 10) || (levelMinRight < 0) || (levelMinRight > 100) || (validateURL(levelURLimg) === false) || (levelDescription < 30)) {
-        alert("Preencha os dados corretamente!");
+        error = true;
     } else {
-        alert('ok');
 
         const object = {
             title: levelTitle,
@@ -376,11 +380,16 @@ function checkLevels(numLevel) {
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveLevels() {
+    error = false;
     for (i = 0; i < levelQuestions; i++) {
         checkLevels(i + 1);
-        console.log("teste2")
     }
+    if (error) {
+        alert("Preencha os dados corretamente!");
+        return;
+    } 
     sucessCreatingQuiz();
+    sendQuiz();
 }
 
 function sucessCreatingQuiz() {
