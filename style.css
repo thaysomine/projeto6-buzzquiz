@@ -359,3 +359,8 @@ h2 {
     display: flex;
     flex-direction: column;
 }
+
+.img-quiz-ready {
+    width: 500px;
+    height: 266px;
+}

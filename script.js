@@ -127,7 +127,7 @@ function goToHome() {
 
 
 
-
+//--------------------------------------------------------------------------------------------------------
 //função para quando o usuário clicar pra criar quizz
 function createQuizz() {
     const hide = document.querySelector('.main-content');
@@ -322,4 +322,12 @@ function saveLevels() {
         checkLevels(i + 1);
         console.log("teste2")
     }
+    sucessCreatingQuiz();
+}
+
+function sucessCreatingQuiz() {
+    const hide = document.querySelector('.third-page');
+    hide.classList.add('hiden');
+    const show = document.querySelector('.fourth-page');
+    show.classList.remove('hiden');
 }
