@@ -138,21 +138,12 @@ function answerResult(answerElement) {
     let selectAnswer = parentElement.querySelectorAll(".answer h3");
     console.log(selectAnswer);
 
-<<<<<<< HEAD
-    let aleatoria = parentElement.querySelector(".true h3");
-    aleatoria.style.color = "green";
-
-    let para = parentElement.querySelectorAll(".false h3");
-    para.forEach(answer => {
-        answer.style.color = "red";
-=======
     let ifTrue = parentElement.querySelector(".true h3");
     ifTrue.style.color="green";
 
     let ifFalse = parentElement.querySelectorAll(".false h3"); 
     ifFalse.forEach(answer => {
         answer.style.color="red";
->>>>>>> b5a1c5e61ceec53abf106e3c3933336aeb5950f1
     });
 }
 
