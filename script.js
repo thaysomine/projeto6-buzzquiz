@@ -2,11 +2,14 @@ let quizData = [];
 
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
+let newQuiz = [];
 
 let idHolder = null;
 let saveData;
 let pass = 0;
 let resul;
+
+let error = false;
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -198,7 +201,7 @@ function goToHome() {
 
 
 
-
+//--------------------------------------------------------------------------------------------------------
 //função para quando o usuário clicar pra criar quizz
 function createQuizz() {
     const hide = document.querySelector('.main-content');
@@ -220,13 +223,13 @@ function saveBasicInfoQuizz() {
     if ((title.length < 20) || (title.length > 65) || (qtQuestion < 3) || (levels < 2) || (validateURL(urlImg) === false)) {
         alert("Preencha os dados corretamente!");
     } else {
-        quiz = {
+        newQuiz = {
             title: title,
             image: urlImg,
-            quenstions: [],
+            questions: [],
             levels: [],
         }
-
+        console.log(newQuiz);
         questionsQuizz();
     }
 }
@@ -288,10 +291,14 @@ function validateHexa(color) {
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveQuestions() {
+    error = false;
     for (i = 0; i < numQuestions; i++) {
         checkQuestions(i + 1);
-        console.log("teste2")
     }
+    if (error) {
+        alert("Preencha os dados corretamente!");
+        return;
+    } 
     quizLevels();
 }
 
@@ -299,6 +306,7 @@ function saveQuestions() {
 function checkQuestions(numQuest) {
     let checkAnswer3 = true;
     let checkAnswer4 = true;
+    let answers = [];
 
     const questionTitle = document.querySelector(".n" + numQuest + "question-text-quiz").value;
     const questionColor = document.querySelector(".n" + numQuest + "color-question-quiz").value;
@@ -325,10 +333,57 @@ function checkQuestions(numQuest) {
 
 
     if ((questionTitle.length < 20) || (questionCorrectAnswer === '') || (validateURL(questionCorrectAnswerURLImage) === false) || (validateHexa(questionColor) === false) || (questionIncorrectAnswer1 === '') || (validateURL(questionIncorrectAnswer1URLImage) === false)) {
-        alert("Preencha os dados corretamente!");
+        error = true;
     } else {
-        alert('ok')
+
+        const answer1 = {
+            text: questionCorrectAnswer,
+			image: questionCorrectAnswerURLImage,
+			isCorrectAnswer: true
+        }
+
+        const answer2 = {
+            text: questionIncorrectAnswer1,
+			image: questionIncorrectAnswer1URLImage,
+			isCorrectAnswer: false
+        }
+
+        const answer3 = {
+            text: questionIncorrectAnswer2,
+			image: questionIncorrectAnswer2URLImage,
+			isCorrectAnswer: false
+        }
+
+        const answer4 = {
+            text: questionIncorrectAnswer3,
+			image: questionIncorrectAnswer3URLImage,
+			isCorrectAnswer: false
+        }
+
+        //Checando quais respostas foram preenchidas pra dar o push no objeto
+
+        if ((checkAnswer3 === true) && (checkAnswer4 === true)) {
+            answers.push(answer1, answer2, answer3, answer4);
+        }
+
+        if ((checkAnswer3 === true) && (checkAnswer4 === false)) {
+            answers.push(answer1, answer2, answer3);
+        }
+
+        if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
+            answers.push(answer1, answer2);
+        }
+
     }
+
+    const object = {
+        title: questionTitle,
+        color: questionColor,
+        answers: answers,
+    }
+
+newQuiz.questions.push(object);
+console.log(newQuiz)
 }
 
 // renderizando os niveis do quizz a partir da quantidade definida pelo user na tela anterior
@@ -368,8 +423,6 @@ function toggleLevels(questionLevel) {
 
 //função validação pra cada nivel(i) na tela de niveis 3-3
 function checkLevels(numLevel) {
-    //let checkAnswer3 = true;
-    //let checkAnswer4 = true;
 
     const levelTitle = document.querySelector(".n" + numLevel + "title-level").value;
     const levelMinRight = document.querySelector(".n" + numLevel + "min-level").value;
@@ -379,16 +432,56 @@ function checkLevels(numLevel) {
 
     
     if ((levelTitle.length < 10) || (levelMinRight < 0) || (levelMinRight > 100) || (validateURL(levelURLimg) === false) || (levelDescription < 30)) {
-        alert("Preencha os dados corretamente!");
+        error = true;
     } else {
-        alert('ok');
+
+        const object = {
+            title: levelTitle,
+			image: levelURLimg,
+			text: levelDescription,
+			minValue: levelMinRight
+        }
+
+        newQuiz.levels.push(object);
+        console.log(newQuiz);
     }
 }
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveLevels() {
+    error = false;
     for (i = 0; i < levelQuestions; i++) {
         checkLevels(i + 1);
-        console.log("teste2")
     }
+    if (error) {
+        alert("Preencha os dados corretamente!");
+        return;
+    } 
+    sucessCreatingQuiz();
+    sendQuiz();
+}
+
+function sucessCreatingQuiz() {
+    const hide = document.querySelector('.third-page');
+    hide.classList.add('hiden');
+    const show = document.querySelector('.fourth-page');
+    show.classList.remove('hiden');
+}
+
+function sendQuiz() {
+    console.log(newQuiz);
+    const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz);
+
+    promisse.then(deucerto);
+    promisse.catch(deuruim);
+}
+
+function deucerto(mensagem) {
+    let msg = mensagem.data;
+    console.log(msg);
+}
+
+function deuruim(mensagemm) {
+    let msg = mensagemm.response.status;
+    console.log(msg);
 }
