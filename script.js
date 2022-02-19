@@ -11,6 +11,7 @@ let lock = false;
 
 let error = false;
 let containLevelZero = false;
+let objectQuestions = {};
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -225,13 +226,18 @@ function validateHexa(color) {
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveQuestions() {
     error = false;
+
     for (i = 0; i < numQuestions; i++) {
         checkQuestions(i + 1);
+        if (error) {
+            alert("Preencha os dados corretamente!");
+            objectQuestions = {};
+            return;
+        } else {
+            newQuiz.questions.push(objectQuestions);
+        }
     }
-    if (error) {
-        alert("Preencha os dados corretamente!");
-        return;
-    }
+    
     quizLevels();
 }
 
@@ -306,16 +312,17 @@ function checkQuestions(numQuest) {
         if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
             answers.push(answer1, answer2);
         }
-
+        
     }
 
-    const object = {
+    objectQuestions = {
         title: questionTitle,
         color: questionColor,
         answers: answers,
     }
 
-    newQuiz.questions.push(object);
+    
+
     console.log(newQuiz)
 }
 
@@ -410,9 +417,14 @@ function sendQuiz() {
     console.log(newQuiz);
     const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz);
     promisse.then(saveID);
+    promisse.catch(deuruim);
 }
 
 function saveID(data) {
     let quizID = data.data.id;
     saveStorage(data.data);
+}
+
+function deuruim() {
+    console.log(newQuiz);
 }
