@@ -400,29 +400,29 @@ function saveLevels() {
             newQuiz.levels.push(objectLevels);
         }
     }
-    sucessCreatingQuiz();
     sendQuiz();    
-}
-
-function sucessCreatingQuiz() {
-    const hide = document.querySelector('.third-page');
-    hide.classList.add('hiden');
-    const show = document.querySelector('.fourth-page');
-    show.classList.remove('hiden');
 }
 
 function sendQuiz() {
     console.log(newQuiz);
     const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz);
-    promisse.then(saveID);
-    promisse.catch(deuruim);
+    promisse.then(sucessCreatingQuiz);
+    promisse.catch(errorSendingQuiz);
 }
 
-function saveID(data) {
-    let quizID = data.data.id;
+function errorSendingQuiz(error) {
+    alert(`Erro ${error.response.status}. Não foi possível criar o seu Quiz. Tente novamente!!`)
+}
+
+function sucessCreatingQuiz(data) {
+    const hide = document.querySelector('.third-page');
+    hide.classList.add('hiden');
+    const show = document.querySelector('.fourth-page');
+    show.classList.remove('hiden');
+
     saveStorage(data.data);
 }
 
-function deuruim() {
-    console.log(newQuiz);
+function saveStorage(NewQuizObj) {
+
 }
