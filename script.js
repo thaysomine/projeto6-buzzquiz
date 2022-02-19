@@ -5,7 +5,8 @@ let levelQuestions; //constante p guardar nível que o usuário escolher na cria
 
 let idHolder = null;
 let saveData;
-let lock = false;
+let pass = 0;
+let resul;
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -58,15 +59,18 @@ function renderBanner() {
 }
 // função para renderizar perguntas
 function renderQuestions() {
+    let i = 0;
     const questions = saveData.questions
     const quizQuestions = document.querySelector(".quiz-questions");
     questions.forEach(question => {
         quizQuestions.innerHTML += `
-        <section class="question-card">
+        <section class="question-card${i}">
                 <div class="question-description">${question.title}</div>
                 <div class="all-answers">${renderAnswers(question)}</div>
             </section>
         `;
+        i++;
+        console.log(quizQuestions);
     });
 }
 // função para renderizar as respostas
@@ -103,23 +107,90 @@ function chooseAnswer(answerElement) {
             answer.setAttribute("onclick","");
         }
     });
-    // chamar a função para revelar respostas
     answerResult(answerElement);
+    // função para scrolar para a próxima pergunta 
+    setTimeout(() => {
+        pass = pass + 1;
+        divQuestionCard = `.question-card${pass}`;
+        scrollElement = document.querySelector(divQuestionCard);
+
+        if (scrollElement === null) {
+            renderResult();
+            const resultQuiz = document.querySelector(".quiz-result");
+            resultQuiz.classList.remove("hiden")
+            resultQuiz.scrollIntoView({block: "center", behavior: "smooth"})
+            console.log("cabo");
+        } else {
+        scrollElement.scrollIntoView({block: "center", behavior: "smooth"});
+        console.log(scrollElement);
+        }
+    }, 2000);;
 }
 function answerResult(answerElement) {
     let parentElement = answerElement.parentNode;
     let selectAnswer = parentElement.querySelectorAll(".answer h3");
     console.log(selectAnswer);
 
-    let aleatoria = parentElement.querySelector(".true h3");
-    aleatoria.style.color="green";
+    let ifTrue = parentElement.querySelector(".true h3");
+    ifTrue.style.color="green";
 
-    let para = parentElement.querySelectorAll(".false h3"); 
-    para.forEach(answer => {
-            answer.style.color="red";
+    let ifFalse = parentElement.querySelectorAll(".false h3"); 
+    ifFalse.forEach(answer => {
+        answer.style.color="red";
     });
 }
 
+// função para renderizar resultado do quiz
+function renderResult() {
+    let questionsLength = saveData.questions.length;
+    let rightAnswers = document.querySelectorAll(".select.true").length;
+    
+    result = Math.round((rightAnswers/questionsLength)*100);
+    console.log(result);
+
+    const levels = saveData.levels
+    levels.forEach(level => {
+        let minValue = level.minValue;
+        if (result >= minValue) {
+            const quizResult = document.querySelector(".quiz-result");
+            quizResult.innerHTML = `
+            <div class="result-description">${result}% de acerto: ${level.title}</div>
+            <div class="result-info">
+                <img src="${level.image}">
+                <p>${level.text}</p>
+            </div>
+            `;
+        }
+    });
+    console.log(levels);
+}
+
+// função para reiniciar quiz
+function resetQuiz() {
+    pass = 0;
+    //scrollar para o topo
+    const element = document.querySelector(".quiz-page-image");
+    element.scrollIntoView();
+    //cores das respostas volta a ser preto
+    let selectAnswer = document.querySelectorAll(".answer h3");
+    selectAnswer.forEach(h3 => {
+        h3.style.color = "black";
+    });
+    //remover o esbranquiçado
+    let removeFog = document.querySelectorAll(".fog")
+    removeFog.forEach(remove => {
+        remove.classList.remove("fog");
+    });
+    //adicionar atributo onclick e remover classe select
+    let addOnClick = document.querySelectorAll(".answer");
+    addOnClick.forEach(element => {
+        element.setAttribute("onclick", "chooseAnswer(this)");
+        element.classList.remove("select");
+        console.log(element);
+    });
+    // (colocar parte aqui para esconder e atualizar resultado do quiz)
+    document.querySelector(".quiz-result").classList.add("hiden");
+}
 // função para voltar a pag inicial ao clicar no botão
 function goToHome() {
     window.location.reload(true);
@@ -137,7 +208,6 @@ function createQuizz() {
 }
 
 //função p salvar as informações básicas da criação do quizz
-
 function saveBasicInfoQuizz() {
     const title = document.querySelector(".title-quizz").value;
     const urlImg = document.querySelector(".image-url-quizz").value;
@@ -162,7 +232,6 @@ function saveBasicInfoQuizz() {
 }
 
 // função p validar url (acho q vamos usar mais vezes)
-
 function validateURL(url) {
     return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
 }
