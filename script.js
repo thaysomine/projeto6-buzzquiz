@@ -12,6 +12,7 @@ let lock = false;
 let error = false;
 let containLevelZero = false;
 let objectQuestions = {};
+let objectLevels = {};
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -312,7 +313,6 @@ function checkQuestions(numQuest) {
         if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
             answers.push(answer1, answer2);
         }
-        
     }
 
     objectQuestions = {
@@ -320,8 +320,6 @@ function checkQuestions(numQuest) {
         color: questionColor,
         answers: answers,
     }
-
-    
 
     console.log(newQuiz)
 }
@@ -378,16 +376,14 @@ function checkLevels(numLevel) {
         error = true;
     } else {
 
-        const object = {
+        objectLevels = {
             title: levelTitle,
             image: levelURLimg,
             text: levelDescription,
             minValue: levelMinRight
         }
-
-        newQuiz.levels.push(object);
-        console.log(newQuiz);
     }
+    console.log(newQuiz);
 }
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
@@ -396,14 +392,16 @@ function saveLevels() {
     containLevelZero = false;
     for (i = 0; i < levelQuestions; i++) {
         checkLevels(i + 1);
+        if ((error === true) || (containLevelZero === false)) {
+            alert("Preencha os dados corretamente!");
+            objectLevels = {};
+            return;
+        } else {
+            newQuiz.levels.push(objectLevels);
+        }
     }
-
-    if ((error === true) || (containLevelZero === false)) {
-        alert("Preencha os dados corretamente!");
-    } else {
-        sucessCreatingQuiz();
-        sendQuiz();
-    }
+    sucessCreatingQuiz();
+    sendQuiz();    
 }
 
 function sucessCreatingQuiz() {
