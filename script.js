@@ -1,8 +1,9 @@
-let quizData = []; 
+let quizData = [];
 
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
-let newQuiz = [];
+let newQuiz = []; // constante p guardar as informações do quizz que está sendo criado
+let userQuiz = []; // constante p guardar os IDs dos quizes criados pelo usuário
 
 let idHolder = null;
 let saveData;
@@ -10,6 +11,9 @@ let pass = 0;
 let result;
 
 let error = false;
+let containLevelZero = false;
+let objectQuestions = {};
+let objectLevels = {};
 
 // requisição para buscar todos os quizzes
 const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
@@ -48,7 +52,7 @@ function renderPageTwo(reply) {
 
     document.querySelector(".main-content").classList.add("hiden");
     document.querySelector(".quiz-page").classList.remove("hiden");
-    
+
     renderBanner(); // função para renderizar banner
     renderQuestions();// função para renderizar perguntas
 
@@ -83,7 +87,7 @@ function renderQuestions() {
 // função para renderizar as respostas
 function renderAnswers(question) {
     const answersUnrandomized = question.answers
-    const answers = answersUnrandomized.sort(()=> Math.random() - 0.5);
+    const answers = answersUnrandomized.sort(() => Math.random() - 0.5);
     console.log(answers);
     let quizAnswers = "";
     answers.forEach(answer => {
@@ -92,7 +96,7 @@ function renderAnswers(question) {
             <img src="${answer.image}">
             <h3>${answer.text}</h3>
         </div>
-        `; 
+        `;
     });
     console.log(quizAnswers)
     return quizAnswers;
@@ -109,9 +113,9 @@ function chooseAnswer(answerElement) {
         let elementSelect = answer.classList.contains("select")
         if (elementSelect === false) {
             answer.classList.add("fog");
-            answer.setAttribute("onclick","");
+            answer.setAttribute("onclick", "");
         } else {
-            answer.setAttribute("onclick","");
+            answer.setAttribute("onclick", "");
         }
     });
     answerResult(answerElement);
@@ -296,13 +300,18 @@ function validateHexa(color) {
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveQuestions() {
     error = false;
+
     for (i = 0; i < numQuestions; i++) {
         checkQuestions(i + 1);
+        if (error) {
+            alert("Preencha os dados corretamente!");
+            objectQuestions = {};
+            return;
+        } else {
+            newQuiz.questions.push(objectQuestions);
+        }
     }
-    if (error) {
-        alert("Preencha os dados corretamente!");
-        return;
-    } 
+    
     quizLevels();
 }
 
@@ -342,26 +351,26 @@ function checkQuestions(numQuest) {
 
         const answer1 = {
             text: questionCorrectAnswer,
-			image: questionCorrectAnswerURLImage,
-			isCorrectAnswer: true
+            image: questionCorrectAnswerURLImage,
+            isCorrectAnswer: true
         }
 
         const answer2 = {
             text: questionIncorrectAnswer1,
-			image: questionIncorrectAnswer1URLImage,
-			isCorrectAnswer: false
+            image: questionIncorrectAnswer1URLImage,
+            isCorrectAnswer: false
         }
 
         const answer3 = {
             text: questionIncorrectAnswer2,
-			image: questionIncorrectAnswer2URLImage,
-			isCorrectAnswer: false
+            image: questionIncorrectAnswer2URLImage,
+            isCorrectAnswer: false
         }
 
         const answer4 = {
             text: questionIncorrectAnswer3,
-			image: questionIncorrectAnswer3URLImage,
-			isCorrectAnswer: false
+            image: questionIncorrectAnswer3URLImage,
+            isCorrectAnswer: false
         }
 
         //Checando quais respostas foram preenchidas pra dar o push no objeto
@@ -377,17 +386,15 @@ function checkQuestions(numQuest) {
         if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
             answers.push(answer1, answer2);
         }
-
     }
 
-    const object = {
+    objectQuestions = {
         title: questionTitle,
         color: questionColor,
         answers: answers,
     }
 
-newQuiz.questions.push(object);
-console.log(newQuiz)
+    console.log(newQuiz)
 }
 
 // renderizando os niveis do quizz a partir da quantidade definida pelo user na tela anterior
@@ -434,58 +441,61 @@ function checkLevels(numLevel) {
     const levelURLimg = document.querySelector(".n" + numLevel + "url-level").value;
     const levelDescription = document.querySelector(".n" + numLevel + "description-level").value;
 
-    
+    if (levelMinRight == 0) {
+        containLevelZero = true;
+    }
+
     if ((levelTitle.length < 10) || (levelMinRight < 0) || (levelMinRight > 100) || (validateURL(levelURLimg) === false) || (levelDescription < 30)) {
         error = true;
     } else {
 
-        const object = {
+        objectLevels = {
             title: levelTitle,
-			image: levelURLimg,
-			text: levelDescription,
-			minValue: levelMinRight
+            image: levelURLimg,
+            text: levelDescription,
+            minValue: levelMinRight
         }
-
-        newQuiz.levels.push(object);
-        console.log(newQuiz);
     }
+    console.log(newQuiz);
 }
 
 //função pra chamar a função de validação pra cada resposta(i) na tela de respostas 3-2
 function saveLevels() {
     error = false;
+    containLevelZero = false;
     for (i = 0; i < levelQuestions; i++) {
         checkLevels(i + 1);
+        if ((error === true) || (containLevelZero === false)) {
+            alert("Preencha os dados corretamente!");
+            objectLevels = {};
+            return;
+        } else {
+            newQuiz.levels.push(objectLevels);
+        }
     }
-    if (error) {
-        alert("Preencha os dados corretamente!");
-        return;
-    } 
-    sucessCreatingQuiz();
-    sendQuiz();
-}
-
-function sucessCreatingQuiz() {
-    const hide = document.querySelector('.third-page');
-    hide.classList.add('hiden');
-    const show = document.querySelector('.fourth-page');
-    show.classList.remove('hiden');
+    sendQuiz();    
 }
 
 function sendQuiz() {
     console.log(newQuiz);
     const promisse = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", newQuiz);
-
-    promisse.then(deucerto);
-    promisse.catch(deuruim);
+    promisse.then(sucessCreatingQuiz);
+    promisse.catch(errorSendingQuiz);
 }
 
-function deucerto(mensagem) {
-    let msg = mensagem.data;
-    console.log(msg);
+function errorSendingQuiz(error) {
+    alert(`Erro ${error.response.status}. Não foi possível criar o seu Quiz. Tente novamente!!`)
 }
 
-function deuruim(mensagemm) {
-    let msg = mensagemm.response.status;
-    console.log(msg);
+function sucessCreatingQuiz(data) {
+    const hide = document.querySelector('.third-page');
+    hide.classList.add('hiden');
+    const show = document.querySelector('.fourth-page');
+    show.classList.remove('hiden');
+
+    saveStorage(data.data);
+}
+
+function saveStorage(NewQuizObj) {
+
 }
