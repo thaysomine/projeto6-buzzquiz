@@ -493,9 +493,23 @@ function sucessCreatingQuiz(data) {
     const show = document.querySelector('.fourth-page');
     show.classList.remove('hiden');
 
-    saveStorage(data.data);
+    userQuiz.push(data.data);
+    const quiz = JSON.stringify(userQuiz);
+    localStorage.setItem("userQuizes", quiz);
 }
 
-function saveStorage(NewQuizObj) {
+function loadLocalStorage() {
+    let userQuizes = localStorage.getItem("userQuizes");
 
+    if (userQuizes === null) {
+        return []
+    } else {
+        const dados = JSON.parse(userQuizes);
+        return dados;
+    }
 }
+
+/*function saveStorage(NewQuizObj) {
+    const newQuizString = JSON.stringify(NewQuizObj)
+    localStorage.setItem(NewQuizObj.id, newQuizString)
+}*/
