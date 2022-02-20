@@ -506,23 +506,37 @@ function sucessCreatingQuiz(data) {
     document.querySelector('.img-quiz-ready').src = newQuiz.image;
     document.querySelector('.fourth-page .description').innerHTML = newQuiz.title;
 
-    userQuiz.push(data.data);
-    const quiz = JSON.stringify(userQuiz);
-    localStorage.setItem("userQuizes", quiz);
+    saveLocalStorage(data);
 }
+
+function saveLocalStorage(quiz) {
+    const quizSerializado = JSON.stringify(quiz);
+    localStorage.setItem(quiz.id, quizSerializado);
+}
+
+/*function getUserQuizes(quizz) {
+    const quizSerializado = localStorage.getItem(quizz.id);
+    const userQuizes = JSON.parse(quizSerializado);
+
+    return userQuizes;
+}*/
 
 function loadLocalStorage() {
-    let userQuizes = localStorage.getItem("userQuizes");
-
-    if (userQuizes === null) {
-        return []
-    } else {
-        const dados = JSON.parse(userQuizes);
-        return dados;
+    for (let i = 0; i < localStorage.length; i++) {
+        userQuiz.push(localStorage.getItem(localStorage.key(i)));
     }
+    //const list = JSON.parse(userQuiz);
+    console.log(userQuiz);
 }
 
-/*function saveStorage(NewQuizObj) {
-    const newQuizString = JSON.stringify(NewQuizObj)
-    localStorage.setItem(NewQuizObj.id, newQuizString)
-}*/
+function goToCreatedQuiz(newQuiz){
+    saveData = newQuiz;
+
+    document.querySelector('.fourth-page').classList.add("hiden");
+    document.querySelector(".quiz-page").classList.remove("hiden");
+
+    renderBanner(); // função para renderizar banner
+    renderQuestions();// função para renderizar perguntas
+
+    document.querySelector(".quiz-page-image").scrollIntoView({block:"start"});
+}
