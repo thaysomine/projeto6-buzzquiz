@@ -43,7 +43,7 @@ header {
 
 /* CSS da caixa que agrupa o conteúdo principal */
 article.main-content {
-    width: 75%;
+    width: 71%;
     height: 100%;
     margin-top: 69px;
     margin-left: auto;
@@ -86,8 +86,8 @@ section.new-quiz {
 
 /* "Todos os Quizzes"*/
 .all-quizzes {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 350px);
 }
 .main-content h1 {
     margin-top: 50px;
@@ -101,14 +101,14 @@ section.new-quiz {
     width: 340px;
     height: 181px;
     position: relative;
-    margin-right: 15px;
     margin-bottom: 12px;
+    border-radius: 5px;  
     background: linear-gradient(transparent, black);
 }
 .all-quizzes img, .user-quizzes img {
     width: 340px;
-    height: 181px;
-    border-radius: 5px;    
+    height: 181px;  
+    border-radius: 5px;
     object-fit: cover;
     position: absolute;
     left: 0;
@@ -129,12 +129,12 @@ section.new-quiz {
 /* CSS dos quizzes do usuário */
 .wrap {
     display: flex;
-    justify-content: space-between;
 }
 .wrap img {
     width: 33px;
     height: 33px;
     margin-top: 45px;
+    margin-left: 25px;
     position: relative;
 }
 
@@ -170,7 +170,7 @@ section.new-quiz {
     margin-top: 42px;
 }
 /* CSS  dos cards de perguntas e respostas*/
-.question-card {
+.border-style {
     width: 100%;
     padding: 25px;
     margin-bottom: 70px;
@@ -189,6 +189,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 23px;
     line-height: 27px;
+    overflow: hidden;
     color: #FFFFFF;
 }
 .all-answers {
@@ -202,7 +203,8 @@ section.new-quiz {
     margin: 15px 0 20px;
     font-weight: bold;
     font-size: 20px;
-    line-height: 23px; 
+    line-height: 23px;
+    overflow: hidden; 
 }
 .answer img { /* CSS para as imgs da resposta */
     width: 345px;
@@ -232,6 +234,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 23px;
     line-height: 27px;
+    overflow: hidden;
     color: #FFFFFF;
 }
 .result-info {
@@ -248,6 +251,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 19px;
     line-height: 25px;
+    overflow: hidden;
     color: #484848;   
 }
 
@@ -365,4 +369,32 @@ h2 {
 .img-quiz-ready {
     width: 500px;
     height: 266px;
+}
+
+@media screen and (max-width: 1100px) {
+    /* TELA 1 */
+    article.main-content {
+        width: 95%;
+    }
+    .allign-middle {
+        width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .all-quizzes {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .wrap {
+        display: flex;
+        justify-content: space-between;
+    }
+    /* TELA 2 */
+    .quiz-questions {
+        width: 100%;
+    }
+    .quiz-result {
+        width: 100%;
+    }
+    
 }

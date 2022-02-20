@@ -7,7 +7,7 @@ let newQuiz = [];
 let idHolder = null;
 let saveData;
 let pass = 0;
-let resul;
+let result;
 
 let error = false;
 
@@ -51,6 +51,8 @@ function renderPageTwo(reply) {
     
     renderBanner(); // função para renderizar banner
     renderQuestions();// função para renderizar perguntas
+
+    document.querySelector(".quiz-page-image").scrollIntoView({block:"start"});
 }
 // função para renderizar banner
 function renderBanner() {
@@ -67,10 +69,12 @@ function renderQuestions() {
     const quizQuestions = document.querySelector(".quiz-questions");
     questions.forEach(question => {
         quizQuestions.innerHTML += `
+        <div class="border-style">
         <section class="question-card${i}">
                 <div class="question-description">${question.title}</div>
                 <div class="all-answers">${renderAnswers(question)}</div>
             </section>
+        </div>
         `;
         i++;
         console.log(quizQuestions);
