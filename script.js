@@ -306,13 +306,18 @@ function saveQuestions() {
         if (error) {
             alert("Preencha os dados corretamente!");
             objectQuestions = {};
+            invalidQuestions();
             return;
         } else {
             newQuiz.questions.push(objectQuestions);
         }
     }
-    
+
     quizLevels();
+}
+
+function invalidQuestions(){
+    newQuiz.questions = [];
 }
 
 //função validação pra cada resposta(i) na tela de respostas 3-2
@@ -386,12 +391,12 @@ function checkQuestions(numQuest) {
         if ((checkAnswer3 === false) && (checkAnswer4 === false)) {
             answers.push(answer1, answer2);
         }
-    }
 
-    objectQuestions = {
-        title: questionTitle,
-        color: questionColor,
-        answers: answers,
+        objectQuestions = {
+            title: questionTitle,
+            color: questionColor,
+            answers: answers,
+        }
     }
 
     console.log(newQuiz)
@@ -468,12 +473,17 @@ function saveLevels() {
         if ((error === true) || (containLevelZero === false)) {
             alert("Preencha os dados corretamente!");
             objectLevels = {};
+            invalidLevels();
             return;
         } else {
             newQuiz.levels.push(objectLevels);
         }
     }
-    sendQuiz();    
+    sendQuiz();
+}
+
+function invalidLevels() {
+    newQuiz.levels = [];
 }
 
 function sendQuiz() {
@@ -492,6 +502,9 @@ function sucessCreatingQuiz(data) {
     hide.classList.add('hiden');
     const show = document.querySelector('.fourth-page');
     show.classList.remove('hiden');
+
+    document.querySelector('.img-quiz-ready').src = newQuiz.image;
+    document.querySelector('.fourth-page .description').innerHTML = newQuiz.title;
 
     userQuiz.push(data.data);
     const quiz = JSON.stringify(userQuiz);

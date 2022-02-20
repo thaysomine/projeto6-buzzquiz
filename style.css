@@ -371,6 +371,10 @@ h2 {
     height: 266px;
 }
 
+.fourth-page .description {
+    z-index: 4;
+}
+
 @media (max-width: 1100px) {
 
 .creating-quizz input {
