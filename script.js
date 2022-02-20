@@ -259,13 +259,13 @@ function questionsQuizz() {
 
     for (let i = 0; i < numQuestions; i++) {
         questionsQuizz.innerHTML += `
-        <div onclick="toggleQuestions(${i + 1})" class="question-name">
+        <div onclick="toggleQuestions(${i + 1})" class="question-name" data-identifier="expand">
             <h2>Pergunta ${i + 1}</h2>
             <button><ion-icon class="iconeQuiz" name="create-outline"></ion-icon></button>
         </div>
         <div class="container${i + 1} hiden">
             <div class="containerReal">
-                <input type="text" class="n${i + 1}question-text-quiz" placeholder="Texto da pergunta">
+                <input type="text" class="n${i + 1}question-text-quiz" placeholder="Texto da pergunta" data-identifier="question">
                 <input type="text" placeholder="Cor de fundo da pergunta" class="n${i + 1}color-question-quiz">
                 <h2>Resposta correta</h2>
                 <input type="text" placeholder="Resposta correta" class="n${i + 1}right-answer-quiz">
@@ -413,13 +413,13 @@ function quizLevels() {
 
     for (let i = 0; i < levelQuestions; i++) {
         levelsQuizz.innerHTML += `
-        <div onclick="toggleLevels(${i + 1})" class="question-name">
+        <div onclick="toggleLevels(${i + 1})" class="question-name" data-identifier="expand">
             <h2>Nível ${i + 1}</h2>
             <button><ion-icon class="iconeQuiz" name="create-outline"></ion-icon></button>
         </div>
         <div class="containers${i + 1} hiden">
             <div class="containerReal">
-                <input type="text" class="n${i + 1}title-level" placeholder="Título do nível">
+                <input type="text" class="n${i + 1}title-level" placeholder="Título do nível" data-identifier="level">
                 <input type="text" class="n${i + 1}min-level" placeholder="% de acerto mínima">
                 <input type="text" class="n${i + 1}url-level" placeholder="URL da imagem do nível">
                 <input type="text" class="n${i + 1}description-level" placeholder="Descrição do nível">
@@ -509,26 +509,6 @@ function sucessCreatingQuiz(data) {
     saveLocalStorage(data);
 }
 
-function saveLocalStorage(quiz) {
-    const quizSerializado = JSON.stringify(quiz);
-    localStorage.setItem(quiz.id, quizSerializado);
-}
-
-/*function getUserQuizes(quizz) {
-    const quizSerializado = localStorage.getItem(quizz.id);
-    const userQuizes = JSON.parse(quizSerializado);
-
-    return userQuizes;
-}*/
-
-function loadLocalStorage() {
-    for (let i = 0; i < localStorage.length; i++) {
-        userQuiz.push(localStorage.getItem(localStorage.key(i)));
-    }
-    //const list = JSON.parse(userQuiz);
-    console.log(userQuiz);
-}
-
 function goToCreatedQuiz(newQuiz){
     saveData = newQuiz;
 
@@ -539,4 +519,16 @@ function goToCreatedQuiz(newQuiz){
     renderQuestions();// função para renderizar perguntas
 
     document.querySelector(".quiz-page-image").scrollIntoView({block:"start"});
+}
+
+function saveLocalStorage(quiz) {
+    const quizSerializado = JSON.stringify(quiz);
+    localStorage.setItem(quiz.data.id.toString(), quizSerializado);
+    loadLocalStorage();
+}
+
+function loadLocalStorage() {
+    for (let i = 0; i < localStorage.length; i++) {
+        userQuiz.push(localStorage.getItem(localStorage.key(i)));
+    }
 }
