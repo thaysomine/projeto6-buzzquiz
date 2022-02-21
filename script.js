@@ -42,12 +42,11 @@ function renderQuizzes(reply) {
             `;
         }
     }
-//    console.log(dataUnfiltered)
 }
 // função para rederizar quizzes do usuário
 function renderUserQuizzes () {
     keys = Object.keys(localStorage);
-    if (keys === null) {
+    if (keys.length === 0) {
         document.querySelector(".new-quiz").classList.remove("hiden");
     } else {
         document.querySelector(".user-quizzes").classList.remove("hiden");
