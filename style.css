@@ -410,6 +410,10 @@ article.main-content {
     display: flex;
     justify-content: space-between;
 }
+.user-quizzes .quiz-main {
+    margin-left: auto;
+    margin-right: auto;
+}
 /* TELA 2 */
 .quiz-questions {
     width: 100%;

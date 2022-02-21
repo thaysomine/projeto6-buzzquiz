@@ -1,4 +1,5 @@
 let quizData = [];
+let userQuizList = document.querySelector(".user-quizzes");
 
 let numQuestions = 1;  //constante p guardar o número de perguntas que o usuário escolher na criação do quizz
 let levelQuestions; //constante p guardar nível que o usuário escolher na criação do quizz
@@ -24,8 +25,8 @@ function renderQuizzes(reply) {
     quizData = reply.data;
     console.log(quizData);
     const quizList = document.querySelector(".all-quizzes");
-    console.log(quizList);
-
+    console.log(userQuizList);
+    // renderizar quizzes de todos usuários 
     for (let i = 0; i < quizData.length; i++) {
         quizList.innerHTML += `
         <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}">
@@ -33,6 +34,30 @@ function renderQuizzes(reply) {
             <div class="description">${quizData[i].title}</div>
         </div>
         `;
+    }
+    renderUserQuizzes();
+}
+// função para rederizar quizzes do usuário
+function renderUserQuizzes () {
+    keys = Object.keys(localStorage);
+    if (keys === null) {
+        document.querySelector(".new-quiz").classList.remove("hiden");
+    } else {
+        document.querySelector(".user-quizzes").classList.remove("hiden");
+        keys.forEach(key => {
+            if (key !== "undefined") {
+                const searchUserQuiz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${key}`);
+                searchUserQuiz.then((reply) => {
+                console.log(reply);
+                userQuizList.innerHTML += `
+                <div onclick="goToQuiz(this)" class="quiz-main" id="${reply.data.id}">
+                    <img src="${reply.data.image}" alt="modelo">
+                    <div class="description">${reply.data.title}</div>
+                </div>
+                `;
+                });
+            }
+        });
     }
 }
 
@@ -531,4 +556,5 @@ function loadLocalStorage() {
     for (let i = 0; i < localStorage.length; i++) {
         userQuiz.push(localStorage.getItem(localStorage.key(i)));
     }
+    console.log(userQuiz);
 }
