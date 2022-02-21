@@ -378,13 +378,35 @@ h2 {
     flex-direction: column;
 }
 
+.containerSucess{
+    position: relative;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    width: 500px;
+    height: 266px;
+    background: linear-gradient(transparent, black);
+}
+
 .img-quiz-ready {
     width: 500px;
     height: 266px;
+    border-radius: 5px;
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
 }
 
 .fourth-page .description {
-    z-index: 4;
+    position: absolute;
+    left: 18px;
+    bottom: 10px;
+    word-break: break-word;
+    width: 301px;
+    font-size: 19px;
+    line-height: 22px;
+    color: #FFFFFF;
 }
 
 @media (max-width: 1100px) {
