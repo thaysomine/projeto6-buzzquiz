@@ -342,8 +342,8 @@ function checkQuestions(numQuest) {
         checkAnswer3 = false;
     }
 
-    const questionIncorrectAnswer3 = document.querySelector(".n" + numQuest + "incorrect-answer2").value;
-    const questionIncorrectAnswer3URLImage = document.querySelector(".n" + numQuest + "incorrect-answer2-url-quiz").value;
+    const questionIncorrectAnswer3 = document.querySelector(".n" + numQuest + "incorrect-answer3").value;
+    const questionIncorrectAnswer3URLImage = document.querySelector(".n" + numQuest + "incorrect-answer3-url-quiz").value;
 
     if ((questionIncorrectAnswer3 === '') || (questionIncorrectAnswer3URLImage === '')) {
         checkAnswer4 = false;
