@@ -35,7 +35,7 @@ function renderQuizzes(reply) {
         console.log(dataFiltered);
         if (dataFiltered === false) {
             quizList.innerHTML += `
-            <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}">
+            <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}" data-identifier="quizz-card">
                 <img src="${quizData[i].image}" alt="modelo">
                 <div class="description">${quizData[i].title}</div>
             </div>
@@ -58,7 +58,7 @@ function renderUserQuizzes () {
                 searchUserQuiz.then((reply) => {
                 console.log(reply);
                 userQuizList.innerHTML += `
-                <div onclick="goToQuiz(this)" class="quiz-main" id="${reply.data.id}">
+                <div onclick="goToQuiz(this)" class="quiz-main" id="${reply.data.id}" data-identifier="quizz-card">
                     <img src="${reply.data.image}" alt="modelo">
                     <div class="description">${reply.data.title}</div>
                 </div>
@@ -112,7 +112,7 @@ function renderQuestions() {
         quizQuestions.innerHTML += `
         <div class="border-style">
         <section class="question-card${i}">
-                <div class="question-description" id="${i}">${question.title}</div>
+                <div class="question-description" id="${i}" data-identifier="question">${question.title}</div>
                 <div class="all-answers">${renderAnswers(question)}</div>
             </section>
         </div>
@@ -130,7 +130,7 @@ function renderAnswers(question) {
     let quizAnswers = "";
     answers.forEach(answer => {
         quizAnswers += `
-        <div onclick="chooseAnswer(this)" class="answer ${answer.isCorrectAnswer}">
+        <div onclick="chooseAnswer(this)" class="answer ${answer.isCorrectAnswer}" data-identifier="answer">
             <img src="${answer.image}">
             <h3>${answer.text}</h3>
         </div>
@@ -203,7 +203,7 @@ function renderResult() {
         if (result >= minValue) {
             const quizResult = document.querySelector(".quiz-result");
             quizResult.innerHTML = `
-            <div class="result-description">${result}% de acerto: ${level.title}</div>
+            <div class="result-description" data-identifier="quizz-result">${result}% de acerto: ${level.title}</div>
             <div class="result-info">
                 <img src="${level.image}">
                 <p>${level.text}</p>
