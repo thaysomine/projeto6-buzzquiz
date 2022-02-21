@@ -10,6 +10,7 @@ let idHolder = null;
 let saveData;
 let pass = 0;
 let result;
+let objectUserQuiz = []; //variável para buscar ID do local storage
 
 let error = false;
 let containLevelZero = false;
@@ -22,20 +23,26 @@ promisse.then(renderQuizzes);
 
 // função para renderizar os quizzes retirados da api
 function renderQuizzes(reply) {
+    renderUserQuizzes();//renderizar quizzes do usuario
+
     quizData = reply.data;
-    console.log(quizData);
     const quizList = document.querySelector(".all-quizzes");
-    console.log(userQuizList);
-    // renderizar quizzes de todos usuários 
+    
+    // renderizar quizzes de todos usuários filtrando os quizzes do usuário atual
     for (let i = 0; i < quizData.length; i++) {
-        quizList.innerHTML += `
-        <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}">
-            <img src="${quizData[i].image}" alt="modelo">
-            <div class="description">${quizData[i].title}</div>
-        </div>
-        `;
+        let teste = `${quizData[i].id}`;
+        let dataFiltered = objectUserQuiz.includes(teste);
+        console.log(dataFiltered);
+        if (dataFiltered === false) {
+            quizList.innerHTML += `
+            <div onclick="goToQuiz(this)" class="quiz-main" id="${quizData[i].id}">
+                <img src="${quizData[i].image}" alt="modelo">
+                <div class="description">${quizData[i].title}</div>
+            </div>
+            `;
+        }
     }
-    renderUserQuizzes();
+//    console.log(dataUnfiltered)
 }
 // função para rederizar quizzes do usuário
 function renderUserQuizzes () {
@@ -46,6 +53,7 @@ function renderUserQuizzes () {
         document.querySelector(".user-quizzes").classList.remove("hiden");
         keys.forEach(key => {
             if (key !== "undefined") {
+                objectUserQuiz.push(key);
                 const searchUserQuiz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${key}`);
                 searchUserQuiz.then((reply) => {
                 console.log(reply);
@@ -58,6 +66,7 @@ function renderUserQuizzes () {
                 });
             }
         });
+        console.log(objectUserQuiz);
     }
 }
 
