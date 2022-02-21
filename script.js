@@ -106,14 +106,18 @@ function renderQuestions() {
     const questions = saveData.questions
     const quizQuestions = document.querySelector(".quiz-questions");
     questions.forEach(question => {
+        let color = question.color;
+        console.log(color);
+        console.log(question);
         quizQuestions.innerHTML += `
         <div class="border-style">
         <section class="question-card${i}">
-                <div class="question-description">${question.title}</div>
+                <div class="question-description" id="${i}">${question.title}</div>
                 <div class="all-answers">${renderAnswers(question)}</div>
             </section>
         </div>
         `;
+        document.getElementById(`${i}`).style.backgroundColor=color;
         i++;
         console.log(quizQuestions);
     });

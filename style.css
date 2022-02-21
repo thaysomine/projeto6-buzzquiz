@@ -13,8 +13,8 @@
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: #FAFAFA;
     font-family: roboto, sans-serif;
 }
@@ -119,7 +119,7 @@ section.new-quiz {
     position: absolute;
     left: 18px;
     bottom: 10px;
-    overflow: hidden;
+    word-break: break-word;
     width: 301px;
     font-size: 19px;
     line-height: 22px;
@@ -161,10 +161,11 @@ section.new-quiz {
     font-size: 19px;
     line-height: 46px;
     color: #FFFFFF;
+    word-break: break-word;
 }
 /* parte que vai agrupar todos os cards */
 .quiz-questions {
-    width: 760px;
+    max-width: 759px;
     height: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -190,7 +191,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 23px;
     line-height: 27px;
-    overflow: hidden;
+    word-break: break-word;
     color: #FFFFFF;
 }
 .all-answers {
@@ -200,12 +201,12 @@ section.new-quiz {
     padding-top: 20px;
     box-sizing: border-box;
 }
-.answer {
+.answer {  
     margin: 15px 0 20px;
     font-weight: bold;
     font-size: 20px;
     line-height: 23px;
-    overflow: hidden; 
+    word-break: break-word;
 }
 .answer img { /* CSS para as imgs da resposta */
     width: 345px;
@@ -235,7 +236,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 23px;
     line-height: 27px;
-    overflow: hidden;
+    word-break: break-word;
     color: #FFFFFF;
 }
 .result-info {
@@ -252,7 +253,7 @@ section.new-quiz {
     font-weight: bold;
     font-size: 19px;
     line-height: 25px;
-    overflow: hidden;
+    word-break: break-word;
     color: #484848;   
 }
 
@@ -416,9 +417,20 @@ article.main-content {
 }
 /* TELA 2 */
 .quiz-questions {
-    width: 100%;
+    max-width: 759px;
 }
 .quiz-result {
-    width: 100%;
+    max-width: 759px;
+}
+.all-answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 0.01em;
+}
+.answer img { /* CSS para as imgs da resposta */
+    max-width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
 }
 }
