@@ -275,7 +275,7 @@ function questionsQuizz() {
                 <input type="text" class="n${i + 1}incorrect-answer1-url-quiz" placeholder="URL da imagem 1">
                 <input type="text"  class="spaceCss n${i + 1}incorrect-answer2" placeholder="Resposta incorreta 2">
                 <input type="text" class="n${i + 1}incorrect-answer2-url-quiz" placeholder="URL da imagem 2">
-                <input type="text"  class="spaceCss n${i + 1}incorrect-answer-3" placeholder="Resposta incorreta 3">
+                <input type="text"  class="spaceCss n${i + 1}incorrect-answer3" placeholder="Resposta incorreta 3">
                 <input type="text" class="n${i + 1}incorrect-answer3-url-quiz" placeholder="URL da imagem 3">
             </div>
         </div>
