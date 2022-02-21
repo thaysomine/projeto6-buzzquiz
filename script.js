@@ -49,7 +49,7 @@ function renderUserQuizzes () {
     if (keys.length === 0) {
         document.querySelector(".new-quiz").classList.remove("hiden");
     } else {
-        document.querySelector(".user-quizzes").classList.remove("hiden");
+        document.querySelector(".allign-middle").classList.remove("hiden");
         keys.forEach(key => {
             if (key !== "undefined") {
                 objectUserQuiz.push(key);
