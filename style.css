@@ -323,6 +323,7 @@ section.new-quiz {
     font-size: 19px;
     line-height: 22px;
     color: #BABABA;
+    padding: 10px;
 }
 
 .next {
@@ -334,6 +335,11 @@ section.new-quiz {
     margin-top: 65px;
     font-size: 21px;
     color: #FFF5F4;
+}
+
+.leveldesc {
+    height: 177px !important;
+    padding-top: 10px;
 }
 
 /* CSS das páginas de criação de quizz - pág 2 */

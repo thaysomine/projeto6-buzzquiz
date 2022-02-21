@@ -459,7 +459,7 @@ function quizLevels() {
                 <input type="text" class="n${i + 1}title-level" placeholder="Título do nível" data-identifier="level">
                 <input type="text" class="n${i + 1}min-level" placeholder="% de acerto mínima">
                 <input type="text" class="n${i + 1}url-level" placeholder="URL da imagem do nível">
-                <input type="text" class="n${i + 1}description-level" placeholder="Descrição do nível">
+                <input type="text" class="n${i + 1}description-level leveldesc" placeholder="Descrição do nível">
             </div>
         </div>
         `
